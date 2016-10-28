@@ -1,0 +1,281 @@
+## Set file for /Users/Anatoly/Dropbox/STUDY/2013ACCN/Project/Cressman_model/EI_Cress_pop_rest.ode on Tue Aug 20 17:54:28 2013
+9   Number of equations and auxiliaries
+43   Number of parameters
+# Numerical stuff
+1    nout
+40    nullcline mesh
+3   Runge-Kutta
+60000  total
+0.05  DeltaT
+0  T0
+0  Transient
+1e+18  Bound
+1e-12  DtMin
+1  DtMax
+0.001  Tolerance
+0.001  Abs. Tolerance
+0  Max Delay
+100   Eigenvector iterates
+0.001  Eigenvector tolerance
+0.001  Newton tolerance
+0  Poincare plane
+1e-05  Boundary value tolerance
+1e-05  Boundary value epsilon
+20   Boundary value iterates
+0   Poincare None
+1   Poincare variable
+1   Poincare sign
+0   Stop on Section
+0   Delay flag
+60000.00000124852  Current time
+60000.00000124852  Last Time
+1   MyStart
+1   INFLAG
+# Delays
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+0.0
+# Bndry conds
+0
+0
+0
+0
+0
+0
+0
+# Old ICs
+-50  VE
+-50  VI
+0  G_E
+0  EE
+0  G_I
+0  II
+0  NOISE
+# Ending  ICs
+-53.95589862833162  VE
+-46.84855243478936  VI
+0.04081310645640325  G_E
+0.0003156273523467946  EE
+0.1222470120146286  G_I
+2.99087225156519e-05  II
+0.1728084917360298  NOISE
+# Parameters
+0  I
+0.5  gie
+0  gii
+0  gee
+0.2  gei
+5.4  tauE_1
+5.4  tauE_2
+0  V_AMPA
+8.300000000000001  tauI_1
+0.2  tauI_2
+-70  V_GABA
+0.044494542  gamma1
+100  tau
+7  beta
+0.044  egkl
+0.02  egnal
+0.008500000000000001  egcil
+1.25  erho
+0  eGglia
+1.33  Eepsilon
+8  Koinf
+6  ecli
+130  eclO
+1  Ce
+135  erK
+26  erNa
+0.048  igkl
+0.0215  ignal
+0.03  igcil
+1.25  irho
+0  iGglia
+1.33  iepsilon
+6  icli
+130  iclO
+1  Ci
+8  eKo
+20  eNai
+8  iKo
+20  iNai
+120  irK
+26  irNa
+3  tau_c
+1  sigma
+# Graphics
+0.7071097251469876  rm
+-0.4999999999826661  rm
+0.4999958366025516  rm
+0.7071038372138505  rm
+0.5000041633974482  rm
+-0.4999999999826661  rm
+0  rm
+0.7071038372138505  rm
+0.7071097251469876  rm
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+0    
+1    
+1    
+1    
+0    
+-1000   
+1000   
+0    
+0   3DFlag
+1   Timeflag
+0   Colorflag
+0   Type
+1  color scale
+0   minscale
+60000   xmax
+0   xmin
+-48.91414260864258   ymax
+-59.1905403137207   ymin
+12   zmax
+-12   zmin
+30000   
+3.333333333333333e-05   
+-54.05234146118164   
+0.1946207277489554   
+0   
+0.08333333333333333   
+45   Theta
+45   Phi
+0    xshft
+0    yshft
+0    zshft
+0   xlo
+-59.1905403137207   ylo
+0   
+-1   
+60000   xhi
+-48.91414260864258   yhi
+20   
+1   
+# Transpose variables etc
+VE
+2   n columns
+1   n rows
+1   row skip
+1   col skip
+1   row 0
+# Coupling stuff for H funs
+0
+0
+0
+0
+0
+0
+0
+# Array plot stuff
+
+1   NCols
+0   Row 1
+50   NRows
+8   RowSkip
+0  Zmin
+1  Zmax
+# Torus information 
+0    Torus flag 1=ON
+6.283185307179586  Torus period
+# Range information
+I
+-1   eq-range stab col
+0   shoot flag 1=on
+10   eq-range steps
+0  eq_range low
+1  eq_range high
+VE
+VE
+20   Range steps
+0   Cycle color 1=on
+1   Reset data 1=on
+1   Use old I.C.s 1=yes
+0  Par1 low
+0  Par2 low
+1  Par1 high
+1  Par2 high
+I
+0   BVP side
+0   color cycle flag 1=on
+10   BVP range steps
+0  BVP range low
+1  BVP range high
+RHS etc ...
+dVE/dT=(-EGNAL*(VE-EVNA(ENAI))-EGKL*(VE-EVK(EKO))-EGCIL*(VE-EVCL)-GEE*G_E*(VE-V_AMPA)-GIE*G_I*(VE-V_GABA)+I+NOISE)/CE
+dVI/dT=(-IGNAL*(VI-IVNA(INAI))-IGKL*(VI-IVK(IKO))-IGCIL*(VI-IVCL)-GEI*G_E*(VI-V_AMPA)-GII*G_I*(VI-V_GABA))/CI
+dG_E/dT=EE
+dEE/dT=1/TAUE_1/TAUE_2*(NUE(VE)*(1-G_E)-G_E-(TAUE_1+TAUE_2)*EE)
+dG_I/dT=II
+dII/dT=1/TAUI_1/TAUI_2*(NUI(VI)*(1-G_I)-G_I-(TAUI_1+TAUI_2)*II)
+dNOISE/dT=-NOISE/TAU_C+W*SIGMA*SQRT(0.05)
+NUE=NUE(VE)*1000
+NUI=NUI(VI)*1000
+
+where ...
+EVCL = 26.64*LOG(ECLI/ECLO)   
+IVCL = 26.64*LOG(ICLI/ICLO)   
+
+User-defined functions:
+ENA0(ENAI) =  144 - BETA*(ENAI-18)  
+EKI(ENAI) =  158 - ENAI  
+INA0(INAI) =  144 - BETA*(INAI-18)  
+IKI(INAI) =  158 - INAI  
+IPUMP(NAI,KO,RHO) = ( RHO/(1+EXP((25-NAI)/3)) )*( 1/(1+EXP(5.5-KO)) )  
+IGLIA(KO,GGLIA) = GGLIA/(1 + EXP((18-KO)/2.5))  
+IDIFF(KO,EPSILON) = EPSILON*(KO-KOINF)  
+EVNA(ENAI) = 26.64*LOG(ENA0(ENAI)/ENAI)  
+EVK(EKO) = 26.64*LOG(EKO/EKI(ENAI))  
+IVNA(INAI) = 26.64*LOG(INA0(INAI)/INAI)  
+IVK(IKO) = 26.64*LOG(IKO/IKI(INAI))  
+NUE(VE) = (EGNAL+EGKL+EGCIL)/CE*(EA/(EC+EXP(-EB*VE)))  
+NUI(VI) = (IGNAL+IGKL+IGCIL)/CI*(IA/(IC+EXP(-IB*VI)))  

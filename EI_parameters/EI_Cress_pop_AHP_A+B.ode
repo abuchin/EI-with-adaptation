@@ -1,0 +1,173 @@
+# model for PID with adaptation
+# Approximation for A(V), VT, Vr and sigV should be fixed
+
+# with noise
+
+
+# INPUT
+par I=0
+par vt_c=5
+
+# SYNAPSES
+par gie=0, gii=0, gee=0, gei=0
+
+par gAHP=0
+par VAHP=-70, tauAHP_1=1, tauAHP_2=414
+
+
+# noise parameters
+ par tau_c=3, sigma=0
+
+
+
+par tauE_1=5.4, tauE_2=5.4, V_AMPA=0
+par tauI_1=8.3, tauI_2=0.2, V_GABA=-70
+
+
+# EXCITATORY POPULATION
+par sigVe=4, VTe=-55, Vre=-65
+
+#par gAHP=2, VAHP=-70, tauAHP_1=1, tauAHP_2=414
+
+par gamma1=0.044494542
+par tau=100
+par beta=7
+
+par gkl=0.044
+par gnal=0.02
+par gcil=0.0085
+
+par phi=3
+par rho=1.25
+par Gglia=0
+par epsilon=1.33
+par Koinf=8
+par cli=6
+par clO=130
+par Cm=1.0
+
+number ea=2.844e+04
+number eb=0.1916
+number ec=1.236e+04
+
+par erK=135
+par erNa=26
+
+
+
+# INHIBITORY POPULATION
+par sigVi=4, VTi=-55, Vri=-65
+
+par igkl=0.048
+par ignal=0.0215
+par igcil=0.03
+
+
+par icli=6
+par iclO=130
+par Ci=1.0
+
+
+# IONIC CONCENTRATIONS
+ par eKo=8
+ par eNai=20
+
+ par iKo=8
+ par iNai=20
+
+#par irK=150
+#par irNa=23
+
+	#Na
+#	deNai/dt= 1/tau*(erNa*nuE(Ve) -gamma1*gnal*(Ve-VNa(eNai)) -3*Ipump(eNai,eKo) )
+	#K0
+#	deKo/dt= 1/tau*(erk*nuE(Ve) +gamma1*beta*gkl*(Ve-Vk(eKo)) -2*beta*Ipump(eNai,eKo) -Idiff(eKo)-Iglia(eKo))
+
+
+	#iNai
+#	diNai/dt= 1/tau*(irNa*nuI(Vi) -gamma1*ignal*(Vi-iVNa(iNai)) -3*Ipump(iNai,iKo) )
+	# eKo
+#	diKo/dt= 1/tau*(irK*nuI(Vi) +gamma1*beta*igkl*(Vi-iVk(iKo)) -2*beta*Ipump(iNai,iKo) -Idiff(iKo)-Iglia(iKo))
+
+
+
+# REVERSAL POTENTIALS
+VNa(eNai)=26.64*log(Na0(eNai)/eNai)
+Vk(eKo)=26.64*log(eKo/Ki(eNai))
+Vcl=26.64*log(cli/clO)
+
+iVNa(iNai)=26.64*log(iNa0(iNai)/iNai)
+iVk(iKo)=26.64*log(iKo/iKi(iNai))
+iVcl=26.64*log(icli/iclO)
+
+# Ion concentrations
+        Na0(eNai) = 144 - beta*(eNai-18)
+	 Ki(eNai) = 158 - eNai
+
+	iNa0(iNai) = 144 - beta*(iNai-18)
+	iKi(iNai) = 158 - iNai
+
+
+
+# Potassium
+Ipump(eNai,eKo)=( rho/(1+exp((25-eNai)/3)) )*( 1/(1+exp(5.5-eKo)) )
+Iglia(eKo)=Gglia/(1 + exp((18-eKo)/2.5))
+Idiff(eKo)=epsilon*(eKo-Koinf)
+
+
+
+# -gAHP*g_AHP*(Ve-VAHP) -gee*g_e*(Ve-V_AMPA)-gie*g_i*(Ve-V_GABA)
+
+ dVe/dt=1/Cm*(I+noise-gnal*(Ve-VNa(eNai)) -gkl*(Ve-Vk(eKo)) -gcil*(Ve-Vcl)-gAHP*g_AHP*(Ve-VAHP) -gee*g_e*(Ve-V_AMPA)-gie*g_i*(Ve-V_GABA))       		
+ nuE(Ve)=(gkl+gkl+gnal)/Cm*(ea/(ec+exp(-eb*(Ve+vt_c)))) +1/sqrt(2*pi)/sigVe*exp(-(Ve-VTe)^2/2/sigVe^2)*1/Cm*(I+noise-gnal*(Ve-VNa(eNai)) -gkl*(Ve-Vk(eKo)) -gcil*(Ve-Vcl)-gAHP*g_AHP*(Ve-VAHP) -gee*g_e*(Ve-V_AMPA)-gie*g_i*(Ve-V_GABA))*sign(1/Cm*(I+noise-gnal*(Ve-VNa(eNai)) -gkl*(Ve-Vk(eKo)) -gcil*(Ve-Vcl)-gAHP*g_AHP*(Ve-VAHP) -gee*g_e*(Ve-V_AMPA)-gie*g_i*(Ve-V_GABA)))
+
+# -gei*g_e*(Vi-V_AMPA)-gii*g_i*(Vi-V_GABA)
+ # Vi
+ dVi/dt=(-ignal*(Vi-iVNa(iNai))-igkl*(Vi-iVk(iKo))-igcil*(Vi-iVcl)-gei*g_e*(Vi-V_AMPA)-gii*g_i*(Vi-V_GABA))/Ci
+ nuI(Vi)=(ignal+igkl+igcil)/Ci*(ea/(ec+exp(-eb*(Vi+vt_c)))) +1/sqrt(2*pi)/sigVi*exp(-(Vi-VTi)^2/2/sigVi^2)*(-ignal*(Vi-iVNa(iNai))-igkl*(Vi-iVk(iKo))-igcil*(Vi-iVcl)-gei*g_e*(Vi-V_AMPA)-gii*g_i*(Vi-V_GABA))/Ci*sign((-ignal*(Vi-iVNa(iNai))-igkl*(Vi-iVk(iKo))-igcil*(Vi-iVcl)-gei*g_e*(Vi-V_AMPA)-gii*g_i*(Vi-V_GABA))/Ci)
+
+
+# AHP current gAHP*g_AHP*(Ve-VAHP)
+dg_AHP/dt=ahp
+dahp/dt=1/tauAHP_1/tauAHP_2*(nuE(Ve)*(1-g_AHP)-g_AHP-(tauAHP_1+tauAHP_2)*ahp)
+
+# E gating variable
+dg_e/dt=ee
+dee/dt=1/tauE_1/tauE_2*(nuE(Ve)*(1-g_e)-g_e-(tauE_1+tauE_2)*ee)
+
+# I gating variable
+dg_i/dt=ii
+dii/dt=1/tauI_1/tauI_2*(nuI(Vi)*(1-g_i)-g_i-(tauI_1+tauI_2)*ii)
+
+
+# Ornstein-Uhlenbeck
+ wiener w
+ dnoise/dt=-noise/tau_c+w*sigma*sqrt(0.05)
+ init noise=0
+
+
+# aux INP=I+n
+aux NUE=nuE(Ve)*1000
+aux NUI=nuI(VI)*1000
+
+
+# INITIAL CONDITIONS
+
+ init Ve=-50
+ init Vi=-50
+
+ init g_e=0, ee=0
+ init g_i=0, ii=0
+
+ init g_AHP=0, ahp=0
+
+# init eNai = 15.5
+# init eKo = 7.8
+
+# init iNai = 15.5
+# init iKo = 7.8
+
+ init g_AHP=0, ahp=0
+
+@ total=5000, dt=0.05, bounds=1000000000000000000, MAXSTOR=10000000
+done

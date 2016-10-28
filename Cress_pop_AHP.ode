@@ -1,0 +1,122 @@
+# Cressman single neuron model
+
+
+# PARAMETERS
+
+# input
+
+par I=0
+
+# gL, EL, gNa, gK, Vm, km, Vn, kn
+par gAHP=1, gee=0.2
+
+# Ornstein-Uhlenbeck
+par tau_c=3
+par sigma=0
+
+
+par gamma1=0.044494542
+par tau=100
+par beta=7
+
+par gNa=100
+par gK=40
+
+par gkl=0.044
+par gnal=0.02
+
+par gcil=0.0085
+par phi=3
+par rho=1.25
+par Gglia=0
+par epsilon=1.33
+par Koinf=8
+par cli=6
+par clO=130
+par Cm=1.0
+
+par VAHP=-70, tauAHP_1=1, tauAHP_2=414
+par tauE_1=5.4, tauE_2=5.4, V_AMPA=0
+
+
+#Excitatory population
+# sigmoid fit
+number ea=2.844e+04
+number eb=0.1916
+number ec=1.236e+04
+
+par rK=135
+par rNa=26
+
+# EQUATIONS
+
+# Reversal potentials
+VNa(Nai)=26.64*log(Na0(Nai)/Nai)
+Vk(Ko)=26.64*log(Ko/Ki(Nai))
+Vcl=26.64*log(cli/clO)
+
+
+# Ion concentrations
+        Na0(Nai) = 144 - beta*(Nai-18)
+	 Ki(Nai) = 158 - Nai
+
+# Gating variables
+
+
+# Currents
+INa(V)= gnal*(V-VNa(Nai))
+IK(V)=gkl*(V-Vk(Ko))
+ICl(V)=gcil*(V-Vcl)
+IAHP(V,g_AHP)=gAHP*g_AHP*(V-VAHP)
+
+# Potassium
+Ipump(Nai,Ko)=( rho/(1+exp((25-Nai)/3)) )*( 1/(1+exp(5.5-Ko)) )
+Iglia(Ko)=Gglia/(1 + exp((18-Ko)/2.5))
+Idiff(Ko)=epsilon*(Ko-Koinf)
+
+par Nai=20
+par Ko=8
+
+# INTEGRATION
+        # V
+        dV/dt=1/Cm*(I-INa(V) -IK(V) -ICl(V)-IAHP(V,g_AHP)-gee*g_e*(V-V_AMPA))     		
+	nuE(V)=(gkl+gkl+gnal)/Cm*(ea/(ec+exp(-eb*V)))
+
+	#Na
+#	dNai/dt= 1/tau*(rNa*nuE(V) -gamma1* INa(V) -3*Ipump(Nai,Ko) )
+	#K0
+#	dKo/dt= 1/tau*(rk*nuE(V) +gamma1*beta*IK(V) -2*beta*Ipump(Nai,Ko) -Idiff(Ko)-Iglia(Ko))
+
+        
+	# AHP current gAHP*g_AHP*(Ve-VAHP)
+	dg_AHP/dt=ahp
+	dahp/dt=1/tauAHP_1/tauAHP_2*(nuE(V)*(1-g_AHP)-g_AHP-(tauAHP_1+tauAHP_2)*ahp)
+
+	# E gating variable
+	dg_e/dt=ee
+	dee/dt=1/tauE_1/tauE_2*(nuE(V)*(1-g_e)-g_e-(tauE_1+tauE_2)*ee)
+
+# Ornstein-Uhlenbeck
+# wiener w
+# dnoise/dt=-noise/tau_c+w*sigma*sqrt(0.05)
+
+aux VNa=26.64*log(Na0(Nai)/Nai)
+aux VK=26.64*log(Ko/Ki(Nai))
+aux VCL=26.64*log(cli/clO)
+
+aux nuE=nuE(V)*1000
+
+
+# INITIAL CONDITIONS
+init V = -50
+#init Nai = 20
+#init Ko = 8
+
+init g_e=0, ee=0
+init g_AHP=0, ahp=0
+
+init g_AHP=0, ahp=0
+# init noise=0
+
+@ total=1000, dt=0.05, bounds=1000000000000000000000000, MAXSTOR=1000000
+done
