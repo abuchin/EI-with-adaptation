@@ -1,0 +1,8 @@
+Note
+
+gEE, gII, gEI, gIE are computed for the rest parameter point
+
+gAHP and VGABA are computed for two different parameter points
+
+
+Yet they all are close to each other in the parameter space. Only gIE changes.
