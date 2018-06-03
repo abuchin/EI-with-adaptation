@@ -17,5 +17,6 @@ To reproduce the bifurcation diagrams, it is necessary to open the EI_Cress_pop_
 Once the bifurcation diagrams are computed similar to Fig. 4, one could change the diagrams properties by going to Graphics -> Frequencies. The frequencies of oscillations will be shown, Fig. 3.
 In order to generate the power spectrum from the time series one would need to go to power_spectrum folder, open Erest.fig, run the data_extract.m script. Then execute plot_spectrum.m file. This file contains the multitaper spectrum fit function.
 In order to fit the power spectrum and evaluate the fit in Matlab it is necessary to type cftool and open sfit file in the corresponding spectrum_fit folder in Fig_2 folder.
+
 Copyright (C) 2018 Anatoly Buchin This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions.
 
