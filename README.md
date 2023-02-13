@@ -1,7 +1,11 @@
 README
 
- This code simulates the E-I population model in XPPAUT. This code allows to generate the time series of the population activity in the excitatory and inhibitory cells during seizure and towards transition to seizure. Some initial ideas for this project were developed during the Advanced Course in Computational Neuroscience (http://www.neuroinf.pl/accn).
+Correction:
+Updated model scripts are available on Google Drive:
+https://drive.google.com/drive/folders/1_9IHJLsLlQU935ytAYzkBhtT7t3WwN0e?usp=sharing
+To perform simulations, please use corresponding .ode files and open them in Xppaut (https://drive.google.com/drive/folders/1_9IHJLsLlQU935ytAYzkBhtT7t3WwN0e?usp=sharing) software.
 
+ This code simulates the E-I population model in XPPAUT. This code allows to generate the time series of the population activity in the excitatory and inhibitory cells during seizure and towards transition to seizure. Some initial ideas for this project were developed during the Advanced Course in Computational Neuroscience (http://www.neuroinf.pl/accn).
 
 You could find the article with the model:
 https://www.ncbi.nlm.nih.gov/pubmed/30302390
